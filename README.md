@@ -37,4 +37,3 @@ To run, for instance, the iCommands help-command `ihelp` in the container we've 
 $ docker run -i --rm icommands:0.1 ihelp
 ```
 This will print the output of the `ihelp` command as if it were installed on your own computer.
-
