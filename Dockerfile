@@ -1,5 +1,9 @@
 FROM ubuntu:18.04
 
+LABEL org.opencontainers.image.source=https://github.com/UtrechtUniversity/icommands-docker
+LABEL org.opencontainers.image.description="Docker container with iCommands"
+LABEL org.opencontainers.image.licenses=MIT
+
 RUN apt-get update && apt-get install -y gnupg2
 RUN apt-get -y install wget
 RUN wget -qO - https://packages.irods.org/irods-signing-key.asc | apt-key add -
