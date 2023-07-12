@@ -19,9 +19,9 @@ if [[ -z "$COMMAND" ]]; then
     COMMAND="ihelp"
 fi
 
-echo "Data root mapping: ${DATA_ROOT_HOST} --> ${DATA_ROOT_CONTAINER}"
+echo "Data root mapping: ${DATA_ROOT_HOST}:${DATA_ROOT_CONTAINER}"
 
-docker run -i --rm \
+docker run -it --rm \
     -v ${USER_IRODS_FOLDER}:/root/.irods/ \
     -v ${DATA_ROOT_HOST}:${DATA_ROOT_CONTAINER} \
     ${CONTAINER_TAG} \
