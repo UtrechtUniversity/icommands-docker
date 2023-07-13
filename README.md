@@ -137,13 +137,14 @@ $ docker run --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
     -v /data/my_project/files:/data/my_project/files \
     iget my-data/research/research_data.zip /data/my_project/files/backup
 ```
-In this case, the folder you are downloading needs to exist.
+In this case, the folder you are downloading to already needs to exist.
 
 
 #### Current iRODS environment
 iCommands will automatically take the address of the YODA-server, and the iRODS home path from the configuration in the `irods_environment.json` file. To see the settings for the current iRODS environment:
 ```bash
-$ docker run --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 ienv
+$ docker run --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
+    -v /data/my_project/irods:/root/.irods ienv
 ```
 
 ### Interrupting operations
