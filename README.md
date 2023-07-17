@@ -53,7 +53,7 @@ N.b., make sure that the path in the container you are mapping to is not one tha
 
 
 ### Access to YODA & Data Access Password
-Make sure that you have access to the YODA-environment you want to communicate with. Using iCommands will require a Data Access Password for the specific YODA-environment you are communicating with. Log in to the YODA-environment, generate a Data Access Password, and copy it ([more info on Data Access Passwords](https://www.uu.nl/en/research/yoda/using-data-access-passwords)).
+Make sure that you have access to the YODA-environment you want to communicate with. Using iCommands will require a Data Access Password for the specific YODA-environment you are communicating with. Log in to the YODA-environment, generate a Data Access Password, and copy it (more info on Data Access Passwords [here](https://www.uu.nl/en/research/yoda/using-data-access-passwords) and [here](https://geo-data-support.sites.uu.nl/manuals/yoda/dap/)).
 
 Note that some YODA-servers are only accessible from within the UU's network. Furthermore, whether a specific YODA-server can be reached from a server (rather than a workstation) depends on network configuration. If attempts to access a YODA-server time out unsuccessfully, it is possible that a firewall between the two is limiting access.
 
