@@ -24,8 +24,8 @@ $ docker pull ghcr.io/utrechtuniversity/docker_icommands:0.2
 
 This needs only to be done once, but if for some reason the image is deleted from the local cache, you will encounter the error `Unable to find image 'ghcr.io/utrechtuniversity/docker_icommands:0.2' locally` when executing a command. In that case, simply pull the container again.
 
-#### Building the container (optional)
-If for some reason you wish to build your own container image rather than download the image from the registry, clone this repository, and execute the following command in the root of the cloned repo:
+#### Locally building the container (optional)
+If for some reason you wish to build your own container image rather than download the image from the registry, clone [the repository](https://github.com/UtrechtUniversity/icommands-docker), and execute the following command in the root of the cloned repository:
 
 ```bash
 $ sudo docker build -t <tag> .
@@ -115,7 +115,12 @@ The `-r` flag ensures that folders are synced recursively, the `-v` flag will ma
 Note the `:i` prefix of the target path, indicating that it is an iRODS path. `irsync` can also be used to sync files from YODA to a local folder - in which case the order of the paths would be reversed - and between two locations in YODA, in which case both paths would get a `i:` prefix.
 
 _Timeouts due to multithreading_
-If sync-, get- or put-operations fail with a timeout-error while transferring data, this is possibly due to multithreading issues. iCommands automatically switch to multithreading when transferring more than 30MB of data. To force singlethreading mode, use the flag `-N 0`.
+
+If sync-, get- or put-operations fail with a timeout-error while transferring data, this is possibly due to multithreading issues. iCommands automatically switch to multithreading when transferring more than 30MB of data. To force singlethreading mode, add the flag `-N 0` to the run command:
+
+```bash
+$ docker run -it --rm -N 0 [...]
+```
 
 
 #### Uploading a file
@@ -139,14 +144,15 @@ $ docker run --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
     -v /data/my_project/files:/data/my_project/files \
     iget my-data/research/research_data.zip /data/my_project/files/backup
 ```
-In this case, the folder you are downloading to already needs to exist.
+Note that the folder you are downloading to already needs to exist.
 
 
 #### Current iRODS environment
 iCommands will automatically take the address of the YODA-server, and the iRODS home path from the configuration in the `irods_environment.json` file. To see the settings for the current iRODS environment:
 ```bash
 $ docker run --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
-    -v /data/my_project/irods:/root/.irods ienv
+    -v /data/my_project/irods:/root/.irods \
+    ienv
 ```
 
 ### Interrupting operations
