@@ -92,7 +92,8 @@ $ docker run -it --rm -N 0 iget [...]
 Before first use, initialise the iCommands session by calling the `iinit` command:
 ```bash
 $ docker run -it --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
-    -v /data/my_project/irods:/root/.irods iinit
+    -v /data/my_project/irods:/root/.irods \
+    iinit
 ```
 You will be asked to enter your Data Access Password (or 'PAM password'), which, after succesful authorization, will be stored (scrambled) in the password cache file `/root/.irods/.irodsA` (which will appear as `/data/my_project/irods/.irodsA` on the host).
 
@@ -100,9 +101,11 @@ You will be asked to enter your Data Access Password (or 'PAM password'), which,
 If you run into the error `-826000 CAT_INVALID_AUTHENTICATION` during operations, try regenerating the password cache file by exiting and re-initialising your iCommands session:
 ```bash
 $ docker run -it --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
-    -v /data/my_project/irods:/root/.irods iexit full
+    -v /data/my_project/irods:/root/.irods \
+    iexit full
 $ docker run -it --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
-    -v /data/my_project/irods:/root/.irods iinit
+    -v /data/my_project/irods:/root/.irods \
+    iinit
 ```
 
 ### Examples of common operations
