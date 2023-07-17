@@ -25,7 +25,7 @@ $ docker pull ghcr.io/utrechtuniversity/docker_icommands:0.2
 This needs only to be done once, but if for some reason the image is deleted from the local cache, you will encounter the error `Unable to find image 'ghcr.io/utrechtuniversity/docker_icommands:0.2' locally` when executing a command. In that case, simply pull the container again.
 
 #### Locally building the container (optional)
-If for some reason you wish to build your own container image rather than download the image from the registry, clone [the repository](https://github.com/UtrechtUniversity/icommands-docker), and execute the following command in the root of the cloned repository:
+If for some reason you wish to build your own container image rather than download the image from the registry, clone [the repository](https://github.com/UtrechtUniversity/icommands-docker), and execute the following command in its root:
 
 ```bash
 $ sudo docker build -t <tag> .
