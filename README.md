@@ -75,6 +75,19 @@ Volume mappings are optional, and only necessary if the operation you are perfor
 
 `<icommand>` can be any of the iCommands; see the [iCommands documentation](https://docs.irods.org/master/icommands/user/) for a complete list. If an iCommand expects arguments, these can be added after the command (no quotes required). If you run the command without any icommand and arguments, it will default to `ihelp`.
 
+_Verbosity_
+
+Most iCommands can be run with `-v` (verbose) and `-V` (very verbose) flags, which forces the command to give some feedback on its operation. This can be helpful to trace the source of problems, or gain a general insight in what's happening.
+
+<a name=singlethreading></a>
+_Single-threading_
+
+Sync-, get- or put-operations automatically switch to multithreading when more than 30MB of data is being transferred. On occasion, this has been observed to cause problems, leading to timeouts. To force a command into single-threading mode, add the flag `-N 0` when running it:
+
+```bash
+$ docker run -it --rm -N 0 iget [...]
+```
+
 ### Initialisation
 Before first use, initialise the iCommands session by calling the `iinit` command:
 ```bash
@@ -114,13 +127,7 @@ The `-r` flag ensures that folders are synced recursively, the `-v` flag will ma
 
 Note the `:i` prefix of the target path, indicating that it is an iRODS path. `irsync` can also be used to sync files from YODA to a local folder - in which case the order of the paths would be reversed - and between two locations in YODA, in which case both paths would get a `i:` prefix.
 
-_Timeouts due to multithreading_
-
-If sync-, get- or put-operations fail with a timeout-error while transferring data, this is possibly due to multithreading issues. iCommands automatically switch to multithreading when transferring more than 30MB of data. To force singlethreading mode, add the flag `-N 0` to the run command:
-
-```bash
-$ docker run -it --rm -N 0 [...]
-```
+In case of timeout-errors, see [the paragraph about single-threading](#singlethreading).
 
 
 #### Uploading a file
@@ -135,6 +142,7 @@ This uploads the local file `research_data.zip` to the collection (folders are c
 
 Note the absence of the `i:` prefix, which is unnecessary since the arguments are non-ambiguous.
 
+In case of timeout-errors, see [the paragraph about single-threading](#singlethreading).
 
 #### Downloading a file
 Analogous to uploading:
@@ -146,6 +154,7 @@ $ docker run --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
 ```
 Note that the folder you are downloading to already needs to exist.
 
+In case of timeout-errors, see [the paragraph about single-threading](#singlethreading).
 
 #### Current iRODS environment
 iCommands will automatically take the address of the YODA-server, and the iRODS home path from the configuration in the `irods_environment.json` file. To see the settings for the current iRODS environment:
