@@ -2,13 +2,15 @@
 
 __iCommands__ is a collection of command line tools for interfacing with iRODS instances, such as YODA. Using iCommands is a more stable and faster way of uploading and downloading data to iRODS than through a WebDav drive-mapping.
 
-However, iCommands are only available for some flavours of Linux (CentOS and Ubuntu), and Windows 10 or 11 using the 'Windows Subsystem for Linux' (WSL). To make them available on other platforms and Windows-systems without WSL, this repository offers a straightforward way of running iCommands using a Docker container. The only technical prerequisite is a Docker installation.
+However, iCommands are only available for some flavours of Linux (CentOS and Ubuntu), and Windows 10 or 11 using the Windows Subsystem for Linux (WSL). To make them available on other platforms and Windows-systems without WSL, this repository offers a straightforward way of running iCommands using a Docker container. The only technical prerequisite is a Docker installation.
 
 More information on iCommands:
 
 + [iCommands documentation](https://docs.irods.org/master/icommands/user/)
 + [YODA: Using iCommands for large datasets](https://www.uu.nl/en/research/yoda/guide-to-yoda/i-am-using-yoda/using-icommands-for-large-datasets)
 + [iRODS Client - iCommands](https://github.com/irods/irods_client_icommands)
+
+If you wish to access iRODS programmatically, there are [client libraries available in various languages](https://irods.org/clients/).
 
 
 ## Set up
@@ -148,21 +150,15 @@ $ docker run --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
 ```
 
 ### Interrupting operations
-If you want to interrupt a (long) running command, open another terminal on the host and display the containers that are running:
+A side-effect of running iCommands through a container can be that interrupting operations by pressing Ctrl+C doesn't work. To interrupt a running command, you can stop the container, rather than the command itself. Open a second terminal on the host, and list all running containers:
 ```bash
 $ docker ps
 ```
-You will see a list of running containers:
-
-```bash
-CONTAINER ID  IMAGE                                           COMMAND                  [...]
-05c151b64963  ghcr.io/utrechtuniversity/docker_icommands:0.2  irsync -v -r -N 0...  1  [...]
-```
-Find the correct container based on the values of IMAGE and COMMAND, copy its CONTAINER ID, and run:
+This will produce a list of running containers. Find the correct container based on the values of IMAGE and COMMAND, copy its CONTAINER ID (a twelve character hexadecimal string), and run:
 ```bash
 $ docker stop <CONTAINER ID>
 ```
-or, if that fails:
+to stop the container. Or, if that fails:
 ```bash
 $ docker kill <CONTAINER ID>
 ```
