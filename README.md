@@ -2,7 +2,7 @@
 
 __iCommands__ is a collection of command line tools for interfacing with iRODS instances, such as YODA. Using iCommands is a more stable and faster way of uploading and downloading data to iRODS than through a WebDav drive-mapping.
 
-However, iCommands are only available for some flavours of Linux (CentOS and Ubuntu), and Windows 10 or 11 using the Windows Subsystem for Linux (WSL). To make them available on other platforms and Windows-systems without WSL, this repository offers a straightforward way of running iCommands using a Docker container. The only technical prerequisite is a Docker installation.
+However, iCommands are only available for some flavours of Linux (CentOS and Ubuntu), and Windows 10 or 11 using the Windows Subsystem for Linux (WSL). To make them available on other platforms, this repository offers a straightforward way of running iCommands using a Docker container. The only technical prerequisite is a Docker installation.
 
 More information on iCommands:
 
@@ -37,10 +37,10 @@ Subtitute `<tag>` with your own tag. A tag consists of a label and a version, se
 iCommands require information about the iRODS-server you want to communicate with. For YODA, these differ per research environment; see [Step 2. Configuring iCommands](https://www.uu.nl/en/research/yoda/guide-to-yoda/i-am-using-yoda/using-icommands-for-large-datasets#paragraph-152527) on the page 'Using iCommands for large datasets' of UU's YODA-pages. Copy the appropriate configuration, and save it as a JSON-file named `irods_environment.json` on your computer (for example, save the file in: `/data/my_project/irods/`). Make sure to change the value of `irods_user_name` to the email-address matching your YODA-account.
 
 ### Volume mapping
-By default, containers run as isolated processes from the host; to make files on the host available inside the container, you must explicitly map a file or folder from the host to one in the container. Volume mappings take the form `/path/on/host:/path/in/container`, and must be provided when starting the container using the `-v` flag. Multiple mappings can be provided by simply repeating the flag and the mapping. For example, by starting a container with `-v /data/my_project:/data`, the files residing on the host in `/data/my_project` will become  accessible within the container in the folder `/data`. Commands executed _inside_ the container, like iCommands, subsequently "see" the files in `/data`.
+By default, containers run as isolated processes from the host; to make files on the host available inside the container, you must explicitly map a file or folder from the host to one in the container. Volume mappings take the form `/path/on/host:/path/in/container`, and must be provided when starting the container using the `-v` flag. Multiple mappings can be provided by simply repeating the flag and the mapping. For example, by starting a container with `-v /data/my_project:/data`, the files residing on the host in `/data/my_project` will become  accessible within the container in the folder `/data`. Commands executed _inside_ the container, like iCommands, "see" the files in `/data`.
 
 #### Mapping ~/.irods/ folder
-The configuraton-file on your host computer must be made accessible to the iCommands running inside the container. By default, iCommands looks for the file in `~/.irods/`. As iCommands run inside the container as root, this expands to `/root/.irods/`. Map the folder on the host computer where you have saved `irods_environment.json` to `/root/.irods/` (expanding on the example above, the volume mapping would become `-v /data/my_project/irods/:/root/.irods/`).
+The configuraton-file on your host computer must be made accessible to the iCommands running inside the container. By default, iCommands looks for the file in `~/.irods/`. As iCommands run inside the container as root, this expands to `/root/.irods/`. Map the folder on the host computer where you have saved `irods_environment.json` to `/root/.irods/` (continuing the example above, the volume mapping would become `-v /data/my_project/irods/:/root/.irods/`).
 
 Note that on initialisation, iCommands will write a cached password to a file in `~/.irods/`, so make sure to use the same mapping for subsequent sessions.
 
@@ -147,7 +147,7 @@ $ docker run --rm \
 ```
 This uploads the local file `research_data.zip` to the collection (folders are called 'collections' in iRODS) `my-data/research/` in YODA. This corresponds to the same folder within the Research-section in the YODA-webinterface (you cannot upload files to the Vault-section). If the collection you are uploading to doesn't exist yet, it is created automatically.
 
-Note the absence of the `i:` prefix, which is unnecessary since the arguments are non-ambiguous.
+Note the absence of the `i:` prefix, which isn't required since the arguments are non-ambiguous.
 
 In case of timeout-errors, see [the paragraph about single-threading](#singlethreading).
 
