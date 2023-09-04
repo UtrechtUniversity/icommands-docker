@@ -91,8 +91,9 @@ $ docker run -it --rm -N 0 iget [...]
 ### Initialisation
 Before first use, initialise the iCommands session by calling the `iinit` command:
 ```bash
-$ docker run -it --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
+$ docker run -it --rm  \
     -v /data/my_project/irods:/root/.irods \
+    ghcr.io/utrechtuniversity/docker_icommands:0.2 \
     iinit
 ```
 You will be asked to enter your Data Access Password (or 'PAM password'), which, after succesful authorization, will be stored (scrambled) in the password cache file `/root/.irods/.irodsA` (which will appear as `/data/my_project/irods/.irodsA` on the host).
@@ -100,11 +101,13 @@ You will be asked to enter your Data Access Password (or 'PAM password'), which,
 #### CAT_INVALID_AUTHENTICATION error
 If you run into the error `-826000 CAT_INVALID_AUTHENTICATION` during operations, try regenerating the password cache file by exiting and re-initialising your iCommands session:
 ```bash
-$ docker run -it --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
+$ docker run -it --rm \
     -v /data/my_project/irods:/root/.irods \
+    ghcr.io/utrechtuniversity/docker_icommands:0.2 \
     iexit full
-$ docker run -it --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
+$ docker run -it --rm \
     -v /data/my_project/irods:/root/.irods \
+    ghcr.io/utrechtuniversity/docker_icommands:0.2 \
     iinit
 ```
 
@@ -136,9 +139,10 @@ In case of timeout-errors, see [the paragraph about single-threading](#singlethr
 #### Uploading a file
 To upload a local file to YODA:
 ```bash
-$ docker run --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
+$ docker run --rm \
     -v /data/my_project/irods:/root/.irods \
     -v /data/my_project/files:/data/my_project/files \
+    ghcr.io/utrechtuniversity/docker_icommands:0.2 \
     iput /data/my_project/files/research_data.zip my-data/research/
 ```
 This uploads the local file `research_data.zip` to the collection (folders are called 'collections' in iRODS) `my-data/research/` in YODA. This corresponds to the same folder within the Research-section in the YODA-webinterface (you cannot upload files to the Vault-section). If the collection you are uploading to doesn't exist yet, it is created automatically.
@@ -150,9 +154,10 @@ In case of timeout-errors, see [the paragraph about single-threading](#singlethr
 #### Downloading a file
 Analogous to uploading:
 ```bash
-$ docker run --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
+$ docker run --rm \
     -v /data/my_project/irods:/root/.irods \
     -v /data/my_project/files:/data/my_project/files \
+    ghcr.io/utrechtuniversity/docker_icommands:0.2 \
     iget my-data/research/research_data.zip /data/my_project/files/backup
 ```
 Note that the folder you are downloading to already needs to exist.
@@ -162,8 +167,9 @@ In case of timeout-errors, see [the paragraph about single-threading](#singlethr
 #### Current iRODS environment
 iCommands will automatically take the address of the YODA-server, and the iRODS home path from the configuration in the `irods_environment.json` file. To see the settings for the current iRODS environment:
 ```bash
-$ docker run --rm ghcr.io/utrechtuniversity/docker_icommands:0.2 \
+$ docker run --rm \
     -v /data/my_project/irods:/root/.irods \
+    ghcr.io/utrechtuniversity/docker_icommands:0.2 \
     ienv
 ```
 
